@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 20140914152829) do
     t.string   "email"
     t.string   "fullname"
     t.boolean  "active"
+    t.string   "password_hash"
+    t.string   "password_salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

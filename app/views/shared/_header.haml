@@ -1,8 +1,6 @@
 %header#header.pt10
   #logo.fl
     .ml10
-      / used for identifying application version and root path
-      = link_to APP_VERSION, root_path
     .mt5
       Env: #{Rails.env}
     .clear0
@@ -38,7 +36,7 @@
                 %li.menu_item
                   = link_to 'Pages', pages_path
                 %li.menu_item
-                  = link_to 'Nodes', nodes_path
+                  = link_to 'Frames', frames_path
 
           .clear0
 

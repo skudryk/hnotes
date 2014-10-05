@@ -17,4 +17,5 @@ end
 
 Page.find_or_create_by!(title: 'Page1', parent_id: Book.all.first.id, parent_type: 'Book')
 Page.find_or_create_by!(title: 'Page2', parent_id: Book.all[1].id, parent_type: 'Book')
-Page.create(title: 'Page3', parent_id: 1)
+Page.find_or_create_by!(title: 'Page3', parent_id: 1)
+User.create!(username: 'skudryk', fullname: 'Serhiy Kudryk', email: 'kudryk@linux.at', active: true, password: 'zxcdsaqwe')
