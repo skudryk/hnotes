@@ -23,7 +23,8 @@ Hnotes::Application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  #config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(:mandle => false)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
