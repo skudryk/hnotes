@@ -1,0 +1,10 @@
+.p10
+  = link_to 'Back', books_path, {:class => "p5 menu"}
+  \|
+  = link_to 'New', new_book_path, {:class => "p5 menu"}
+  \|
+  = link_to 'Create New page', new_page_path, {:class => "menu p5"}
+
+%h2.p10 Editing book
+
+= render 'form'

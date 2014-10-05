@@ -1,0 +1,71 @@
+.fl.pt20
+  %h2 Dashboard
+.clear0
+
+
+.pt20
+  %h4 Actions
+  
+  %ul.menu.clear0
+    %li.menu_item
+      = link_to 'Search people', search_people_path
+    %li.menu_item
+      = link_to 'Search Campaigns', search_campaigns_path
+
+  .clear0
+  
+.pt20
+  %h4 Last activity
+
+  .m20
+    %p
+      %h4 Last Campaign:
+      - campaign = Campaign.last
+      - if campaign
+        = link_to campaign.name, campaign, class: 'fl simple_link'
+        - if campaign.segment
+          .ml10.fl (number of people: #{campaign.segment.count_people})
+        .clear0
+    %p
+      %h4 Last Segment:
+      - segment = Segment.last
+      - if  segment
+        = link_to segment.name, segment, class: 'simple_link'
+
+    %p
+      %h4 Last Email (Newsletter):
+      - email = Email.only_newsletters.last
+      - if email
+        = link_to email.name, email, class: 'simple_link'
+
+    %p
+      %h4 Last Ad Hoc Message:
+      - msg = AdHocMessage.last
+      - if msg
+        = link_to msg.name, msg, class: 'simple_link'
+    
+.pt20
+  %h4 Help
+  %p
+    This application helps you to create/copy/launch Campaigns with different categories of people, view statistics charts etc
+    .pt10  Available categories:
+    %ul.p20
+      %li Expert
+      %li Doctor (for non network experts)
+      %li Member
+      %li Patient (for potential non network  / disabled members)
+      %li Tester
+
+  .mt10
+    .m10
+      %u Usual scenario to get started:
+
+    %p
+
+    Select tool from menu ('Outreach' or 'Engagement') and then target people category.
+    %br
+    Then create Segment (if new need new one), map new/existed Email to specific Segment and then map new/existed
+    Campaign to this Email.
+    %br
+    And after this you can finally launch campaign and view its results.
+     

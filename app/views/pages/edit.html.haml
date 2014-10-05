@@ -1,0 +1,10 @@
+.p10
+  = link_to 'Show page', @page, {:class => "p5 menu"}
+  \|
+  = link_to 'Back to the list', pages_path, {:class => "p5 menu"}
+  \|
+  = link_to 'New page', new_page_path, {:class => "p5 menu"}
+
+%h2.p10 Editing page
+
+= render 'form'

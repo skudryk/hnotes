@@ -1,0 +1,27 @@
+= form_for @subscription do |f|
+  -if @subscription.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@subscription.errors.count, "error")} prohibited this subscription from being saved:"
+      %ul
+        - @subscription.errors.full_messages.each do |msg|
+          %li= msg
+   
+  %h4 Select person to unsubscribe
+  .p20.small-text
+    by master_id
+  %dl
+    %dt= 'master_id'
+    %dd= f.text_field :master_id
+  .p20.small-text
+    or by name
+  %dl
+    %dt= 'Full Name'
+    %dd= text_field_tag 'full_name'
+  .p20.small-text
+    or select from list
+  %dl
+    %dd
+      =select_tag "doctors[master_id]", options_for_select(@doctors.map {|x| x.full_name })
+
+  .menu.p20
+    = f.submit 'Save'

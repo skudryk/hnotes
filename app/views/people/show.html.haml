@@ -1,0 +1,58 @@
+.subnav
+  = link_to "All #{current_category.pluralize}", people_path
+
+%h3 #{current_category.capitalize} - #{@person.full_name} (subscribed: #{@person.subscribed?})
+
+%a{name: "properties"}
+
+.p10
+  =link_to 'View statistics', '#statistics', class: 'simple_link'
+  
+.pl10
+
+  %h3 Properties
+  %table
+    - @person.email_addresses.each do |ea|
+      %tr{:class => cycle('even','odd')}
+        %td Email
+        %td= ea.email
+ 
+    - person_fields.each do |attr, value|
+      - if value
+        %tr{:class => cycle('even','odd')}
+          %td
+            = attr.humanize
+          %td
+            = value
+   
+.pt20
+  =link_to 'View properties', '#properties', class: 'simple_link'
+
+= render "campaigns/chart"
+    
+.pl10
+  %a{name: "statistics"}
+  %h3 Detailed statistics by campaign
+  %table.statistics
+    %tr
+      %th{:style => 'width: 15em;'} Campaign
+      %th{:style => 'width: 15em;'} Email
+      %th{:style => 'width: 4em;'} Event
+      %th{:style => 'width: 8em;'} Created at
+    - @person.email_addresses.each do |ea|
+      - if ea.statistics_items.first
+        - ea.statistics_items.each do |si|
+          %tr{:class => cycle('even','odd')}
+            - if si.campaign
+              %td= link_to si.campaign.name, campaign_path(si.campaign_id)
+            - else
+              %td.error [ campaign deleted ]
+            %td= ea.email
+            %td= si.event
+            %td= si.created_at
+      - else
+        %tr{:class => cycle('odd','even')}
+          %td{colspan: 4, style: 'text-align: center'}  [no entries]
+
+
+.clear10

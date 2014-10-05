@@ -1,0 +1,24 @@
+= form_for @page do |f|
+  -if @page.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
+      %ul
+        - @page.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field.mt10
+    = f.label :title
+    = f.text_field :title, required: 'required', size: 64
+    %span.error *
+  .field.mt10
+    = f.label :position
+    = f.text_field :position, required: 'required', size: 32
+    %span.error *
+
+  .field.mt10
+    = f.label 'Parent'
+    = f.select :parent_class, parent_list_for_selection, title: 'Click to select parent'
+  
+  .mt20
+    = f.submit 'Save'
+

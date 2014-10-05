@@ -1,0 +1,28 @@
+.clear10
+%h3 Fill at least one field to search for the person
+
+= form_for @person, method: :get, url: { action: 'index' } do |f|
+  - if @person.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@doctor.errors.count, "error")} prohibited this doctor from being saved:"
+      %ul
+        - @person.errors.full_messages.each do |msg|
+          %li= msg
+
+  .m20
+    = f.label :first_name
+    %br
+    = f.text_field :first_name
+  .m20
+    = f.label :last_name
+    %br
+    = f.text_field :last_name
+  .m20
+    E-mail
+    %br
+    = text_field_tag :email
+  .m20
+    Category
+    =select_tag "people_category", options_for_select(%w(expert doctor member patient),['expert'])
+  .m20
+    = f.submit 'Search'

@@ -1,0 +1,85 @@
+= render 'campaigns_links'
+
+%h4 Name: #{@campaign.name}
+  
+- if !@campaign.finished? and @campaign.email and @campaign.segment
+  #run_campaign{:"data-status" => @campaign.status}
+    #progress
+      .label
+      .bar
+
+    = campaign_button('launch')
+    = campaign_button('check')
+    = campaign_button('resume')
+    = campaign_button('test_run')
+    = campaign_button('pause')
+
+.clear10
+
+%hr.mt10
+
+
+
+%p
+  - cl = (@campaign.display_status == 'Sent') ? 'green' : 'red'
+  %strong
+    Status:
+    %span#campaign_status{style: "color: #{cl}"}= @campaign.display_status
+    - if @campaign.status == 'paused'
+      %span#campaign_progress (#{@campaign.processed_emails_num} emails has been sent )
+%p Subject: #{@campaign.get_subject}
+%p From: #{@campaign.from}
+%p Reply-to: #{@campaign.reply_to}
+%hr.mt10
+
+
+%p
+  %strong Mapped Segment :
+  - if @campaign.get_segment
+    = link_to @campaign.get_segment.name, segment_path(@campaign.get_segment), target: '_blank', class: 'simple_link'
+  - else
+    = '[none]'
+    .warning.mt10.fl{style: 'width: 40%'} Hint: To map Segment to this Campaign please edit mapped Email
+    - if @campaign.email
+      .m20
+        = link_to 'Map Segment to Email now!', @campaign.email, target: '_blank', class: 'fl btn'
+    .clear0
+
+.mt10
+  %strong Mapped Email :
+  - if @campaign.email
+    = link_to @campaign.email_name, @campaign.email, target: '_blank', class: 'simple_link'
+  - else
+    = '[none]'
+    .warning.mt10 Hint: To map Email to this Campaign press 'Edit' button
+  - if @campaign.email
+    %p.pt20.pl20
+      %strong Email content:
+    .pl20= raw @campaign.email.try(:content)
+
+
+
+%hr.mt10
+
+= javascript_include_tag :start_campaign
+
+- content_for :javascripts do
+  :javascript
+    $(document).ready(function(){
+      // constants
+      window.test_run_campaign_path = '#{test_run_campaign_path(@campaign)}';
+      window.run_campaign_path = '#{run_campaign_path(@campaign)}';
+      window.progress_campaign_path = '#{progress_campaign_path(@campaign)}';
+      window.pause_campaign_path = '#{pause_campaign_path(@campaign)}';
+      window.resume_campaign_path = '#{resume_campaign_path(@campaign)}';
+      window.people_count_path = '#{people_count_campaigns_path}';
+      var json_campaign = '#{@campaign.to_json}';
+      var campaign_status = "#{@campaign.status}";
+      window.camp = new Campaign();
+      window.camp.init();
+      window.camp.model = $.parseJSON(json_campaign);
+      window.camp.updateStatus(campaign_status);
+      console.log('campaign object created');
+    });
+
+

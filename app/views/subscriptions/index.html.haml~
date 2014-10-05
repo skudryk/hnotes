@@ -1,0 +1,40 @@
+- if !@subscriptions.empty?
+  .p10.fl
+    = link_to 'Download', download_subscriptions_path +  '.csv', {:class => "menu p5"}
+  .p10.fl
+    = link_to 'Unsubscribes upload', upload_subscriptions_path, {:class => "menu p5"}
+  .clear10
+  %h3.m10 Subscriptions list
+  .p10.digg_pagination
+    = will_paginate @subscriptions
+  -#.small-text.fl.p10 (showing first 100 recently updated records)
+  .clear0
+  %table.listing
+    %tr
+      %th Person
+      %th Created
+      %th Changed
+      %th Status
+      %th.error Action
+
+    - @subscriptions.each do |subscription|
+      %tr
+        - if subscription.doctor
+          %td= link_to subscription.doctor.full_name, doctor_path(subscription.master_id), {:class => "menu p5"}
+          %td= subscription.created_at
+          %td= subscription.updated_at
+          %td= (subscription.active) ? "subscribed" : "unsubscribed"
+          - la = (subscription.active) ? ['Unsubscribe', unsubscribe_subscriptions_path] : ['Subscribe', subscribe_subscriptions_path]
+          %td= link_to la[0], la[1] + "?email=#{subscription.doctor.email}", {:class => "menu p5"}
+        - else
+          %td.error{:colspan => "4"}
+            .pl5 <Broken subscription>
+          %td= link_to 'Destroy', subscription, :confirm => 'Are you sure?', :method => :delete
+
+- else
+  %h4.m10.error No active subscriptions in DB
+
+%br
+.p10.digg_pagination
+  = will_paginate @subscriptions
+

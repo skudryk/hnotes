@@ -1,0 +1,237 @@
+/*
+ *= require jquery-ui-1.8.17.custom
+ */
+
+@import "compass/css3"
+
+@import menu_links
+@include menu_links
+
+input::-webkit-validation-bubble
+  left: 340px !important
+
+
+
+form
+  position: relative // for html5 form validation
+input
+  &:invalid
+    border-color: #f60
+  &::-webkit-validation-bubble
+    margin-top: -36px
+  &::-webkit-validation-bubble-message
+    font-size: 12px
+    padding: 3px 5px
+    border-radius: 5px
+  &::-webkit-validation-bubble-arrow
+    display: none
+
+textarea
+  text-transform: none !important
+
+
+.subnav
+  margin: 20px 70px
+  position: relative
+  @include menu_links
+  
+.subnav a, a.btn, input[type="submit"], button[type="submit"]
+  margin: 0 5px
+  background: olivedrab
+  padding: 3px 7px
+  color: white
+  outline-color: white
+  font-weight: 700
+  @include border-radius(3px)
+    
+  &:visited
+    color: white
+
+  &:hover
+    color: olive
+    background: #F0E68C
+
+
+#container
+  h1
+    margin: 20px 0
+  h2
+    margin: 15px -10px
+  form
+    padding-left: 10px
+    dt
+      float: left
+    dd
+      margin-left: 120px
+
+table
+  border-collapse: collapse
+  min-width: 350px
+  max-width: 900px
+
+table.statistics
+  max-width: 900px
+  margin-top: 20px
+  td
+    text-align: center
+
+.statistics th
+  background: mintcream
+
+table td
+  border: 1px solid #333
+  vertical-align: top
+  overflow: hidden
+  text-overflow: ellipsis
+  min-width: 3em
+  max-width: 36em
+  white-space: nowrap
+
+input, select
+  overflow: hidden
+  text-overflow: ellipsis
+  max-width: 64em
+
+#ajax_loader, .ajax_loader
+  background: url(loading.gif)
+  top: 330px
+  left: 50%
+  right: 50%
+  margin: 0 -64px
+  height: 15px
+  display: none
+  position: absolute
+  z-index: 900
+
+
+.validation-error
+  background-color: #FFF0EC
+  border: 1px solid #DC143C
+  font-size: 12px
+  padding: 1px 5px
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+  -moz-box-shadow: 3px 3px 3px pink
+  -webkit-box-shadow: 3px 3px 3px pink
+
+.digg_pagination
+  background: white
+  cursor: default
+  a, span, em
+    padding: 0px 4px
+    display: block
+    float: left
+    margin-right: 1px
+  .disabled
+    color: #999999
+    border: 1px solid #dddddd
+  .current
+    font-style: normal
+    font-weight: bold
+    background: #2e6ab1
+    color: white
+    border: 1px solid #2e6ab1
+  a
+    text-decoration: none
+    color: #105cb6
+    border: 1px solid #9aafe5
+    &:hover, &:focus
+      color: olive
+      background: #F0E68C
+      border-color: #000033
+  .page_info
+    background: #2e6ab1
+    color: white
+    padding: 0.4em 0.6em
+    width: 22em
+    margin-bottom: 0.3em
+    text-align: center
+    b
+      color: #000033
+      background: #2e6ab1 + 60
+      padding: 0.1em 0.25em
+  /* self-clearing method:
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+  * html &
+    height: 1%
+  *:first-child+html &
+    overflow: hidden
+
+.complete
+  color: green
+
+#find_email_form, #find_segment_form
+  margin-top: 10px
+  display: none
+
+.simple_link
+  color: #2b80af
+  &:hover
+    background: none
+    text-decoration: underline
+
+  &:visited
+    color: #2b80af
+
+
+#tag_help
+  background: #ffa
+  border: 1px solid gray
+  @include border-radius(5px)
+  top: 10px
+  right: 50px
+  padding: 10px
+  width: 49%
+  display: none
+  position: absolute
+  z-index: 100
+  p
+    cursor: help
+
+
+
+.field_with_errors 
+  padding: 2px
+  background-color: indianred
+  display: table
+
+#error_explanation
+  width: 450px
+  border: 2px solid indianred
+  padding: 7px
+  padding-bottom: 0
+  margin-bottom: 20px
+  background-color: #f0f0f0
+  h2
+    text-align: left
+    font-weight: bold
+    padding: 5px 5px 5px 15px
+    font-size: 12px
+    margin: -7px
+    margin-bottom: 0px
+    background-color: #c00
+    color: #fff
+  ul li
+    font-size: 12px
+    list-style: square
+
+.geo_map
+  float: left
+  margin-top: 15px
+  height: 430px
+  width: 540px
+  h4
+    font-size: 11px
+    font-weight: 700
+    color: black
+  img
+    margin-left: 50px
+
+
+.noborder, .noborder tr, .noborder th, .noborder td
+  border: 0px

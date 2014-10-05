@@ -1,0 +1,156 @@
+DocChimp::Application.routes.draw do
+
+  resources :testers
+
+  get 'log_in' => 'sessions#new', :as => 'log_in'
+  get 'log_out' => 'sessions#destroy', :as => 'log_out'
+  get 'sign_up' => 'users#new', :as => 'sign_up'
+  resources :sessions
+
+  resources :users do
+    member do
+      get 'approve'
+      get 'update_category'
+    end
+  end
+
+  resources :people do
+    collection do
+      get 'subscribe'
+      get 'unsubscribe'
+      get 'autocomplete'
+      get 'search'
+      get 'upload'
+      post 'import'
+    end
+  end
+
+  resources :emails do
+    collection do
+      get 'autocomplete'
+    end
+    member do
+      get 'copy'
+    end
+  end
+
+  resources :ad_hoc_messages do
+    member do
+      get 'copy'
+    end
+  end
+
+  resources :campaigns do
+    collection do
+      get 'search'
+      post 'search'
+      post 'statistics_update'
+      get 'people_count'
+      get 'autocomplete'
+      get 'check_name_availability'
+      get 'download'
+    end
+    member do
+      get 'email'
+      post 'run'
+      post 'test_run'
+      post 'resume'
+      post 'pause'
+      get 'progress'
+      get 'report'
+      get 'copy'
+      get 'download_stats'
+    end
+  end
+
+  resources :ad_hoc_campaigns do
+    collection do
+      get 'search'
+      post 'search'
+      get 'people_count'
+      get 'autocomplete'
+      get 'check_name_availability'
+      get 'download'
+    end
+    member do
+      get 'email'
+      post 'run'
+      post 'test_run'
+      post 'resume'
+      post 'pause'
+      get 'progress'
+      get 'report'
+      get 'copy'
+      get 'download_stats'
+    end
+  end
+  
+  resources :segments do
+    collection do
+      get 'autocomplete'
+      get 'create_from_list'
+      post 'import'
+    end
+    member do
+      get 'output_fields'
+      post 'output_fields'
+      get 'download'
+      get 'copy'
+      get 'people_stats'
+    end
+  end
+
+  resources :faxes
+  resources :email_addresses
+  
+  get '/api/auth' => 'sessions#remote_auth', :as => :remote_auth
+
+  resources :reports do
+   collection do
+      get 'experts_stats'
+      get 'members_stats'
+      get 'questions_stats'
+      get 'answers_stats'
+      get 'members_stats'
+      get 'thanks_stats'
+      get 'page_views_stats'
+      get 'follows_stats'
+      get 'download'
+    end
+  end
+
+  match '/reports' => 'reports#index', :as => :reports
+  match '/reports/campaign_report/:id' => 'reports#campaign_report', :as => :campaign_report
+  match '/dashboard' => 'dashboard#index', :as => :dashboard
+  
+  root :to => 'dashboard#index'
+
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route with sub-resources:
+  #   resources :products do
+  #     resources :comments, :sales
+  #     resource :seller
+  #   end
+
+  # Sample resource route with more complex sub-resources
+  #   resources :products do
+  #     resources :comments
+  #     resources :sales do
+  #       get 'recent', :on => :collection
+  #     end
+  #   end
+
+  # Sample resource route within a namespace:
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
+end

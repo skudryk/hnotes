@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title
+      - if @page_title
+        == #{CONFIG[:APP_NAME]} :: #{h @page_title}
+      - else
+        == #{CONFIG[:APP_NAME]}
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8'}
+    = javascript_include_tag 'application'
+    = javascript_include_tag 'http://www.google.com/jsapi'
+    = stylesheet_link_tag    'application'
+    = stylesheet_link_tag params[:controller]
+    = yield :stylesheets
+    = csrf_meta_tags
+
+  %body
+    = render 'shared/header'
+    %section#body_content
+      #ajax_loader
+      #container
+        = render 'shared/flashes'
+        = yield
+    = render :partial => 'shared/footer'
+    = javascript_include_tag params[:controller]
+    = yield :javascripts

@@ -1,0 +1,14 @@
+#error_explanation.hidden
+
+.p20
+  = form_for :file_form, :url => {:controller => params[:controller], :action => :import}, :html => {:method => :post, :id => 'uploadForm', :remote=> true, :multipart => true} do |f|
+    Upload a file:
+    = f.file_field :uploaded_data
+
+= javascript_include_tag "ajax_file_upload.js"
+= javascript_include_tag "jquery_form.js"
+:javascript
+  $(function() {
+    $('#uploadForm').ajaxForm();
+    setAJAXSubmitOnChange('#uploadForm');
+  });

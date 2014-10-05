@@ -1,0 +1,51 @@
+%h2 Listing #{(@category || current_category).pluralize.capitalize}
+
+.p10.digg_pagination
+  -#= will_paginate @people
+  = paginate @people
+
+-#.m20{style: 'color: wheat'}
+  -#Sorted by: #{@sort_by} #{@dir}
+
+
+%table.listing
+  %tr
+    %th#master_id_col{style: 'width: 8em'}= link_to 'Master ID', @link + '?sort_by=master_id', title: 'click here to sort by Master ID'
+    %th{style: 'width: 8em'} HealthTap ID
+    %th#first_name_col= link_to 'First Name', @link + '?sort_by=first_name', title: 'click here to sort by First Name'
+    %th#last_name_col= link_to 'Last Name', @link + '?sort_by=last_name', title: 'click here to sort by Last Name'
+    -# FIXME!!! - remove people in DB without assigned email address
+    %th#email_col= link_to 'Email', @link + '?sort_by=email', title: 'click here to sort by Email'
+    - if params[:action] == 'index'
+      %th.error{style: 'width: 8em'} Actions
+
+  - @people.each do |person|
+    - begin
+      %tr{:class => cycle('even','odd')}
+        %td= link_to person.master_id, person_path(person), class: 'simple_link'
+        %td= person.healthtap_id
+        %td
+          - if person.first_name
+            = link_to person.first_name, people_path + "?expert[first_name]=#{person.first_name}&commit=Search", title: "Search by first name", class: 'simple_link'
+        %td
+          - if person.last_name
+            = link_to person.last_name, people_path + "?expert[last_name]=#{person.last_name}&commit=Search", title:  "Search by last name", class: 'simple_link'
+        %td
+          - logger.debug "tp"
+          - person.email_addresses.each do |ea|
+            .ml10= ea.email
+        -#= person.emails
+        - if params[:action] == 'index'
+          %td= subscription_link(person)
+    - rescue
+      - logger.debug " bad person: #{person.to_json}"
+
+%br
+
+
+.p10.digg_pagination
+  -#= will_paginate @people
+  = paginate @people
+
+
+= render 'shared/display_sort_order'

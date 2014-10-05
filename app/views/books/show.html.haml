@@ -1,0 +1,42 @@
+.subnav
+  = link_to 'All books', books_path, {:class => "menu p5"}
+  = link_to 'Create new book', new_book_path, {:class => "menu p5"}
+  = link_to 'Edit this book', edit_book_path(@book), {:class => "menu p5"}
+  /= link_to 'Export', output_fields_book_path(@book), {:class => "menu p5"}
+  /- if action == 'clone'
+  /  = link_to 'Save As New', copy_book_path(@book), {:class => "menu p5"}
+  = link_to 'Delete book', @book, confirm: 'Are you sure?', method: :delete
+  = link_to 'Create new page', new_page_path, {:class => "menu p5"}
+  = link_to 'Back', books_path, {:class => "p5 menu"}
+  .clear0
+
+
+%h2.p10 Editing book
+
+.m20
+  = render 'form'
+
+
+
+%h4 Title: #{@book.title}
+%h4 Category: #{@book.category}
+%h4 Shared to: #{@book.get_people_shared_to}
+%h4 Pages number: #{@book.count_pages}
+%h4.fl.pt2 Number of pages: #{@book.pages.count}
+.clear
+
+- if @book.pages.count > 0
+
+  %table.listing.m20
+    %tr
+      %th#id_col{:style => 'width: 4em;'}= link_to 'ID', pages_path + '?sort_by=id', title: 'click here to sort by ID'
+      %th#title_col= link_to 'Title', pages_path + '?sort_by=title', title: 'click here to sort by title'
+      %th{:style => 'width: 7em;'}
+      %th#date_col{:style => 'width: 4em;'}
+        = link_to 'Date', pages_path + '?sort_by=updated_at', title: 'click here to sort by date of modification'
+    - @book.pages.each do |page|
+      %tr{:class => cycle('even','odd')}
+        %td= link_to page.id, edit_page_path(page), class: 'simple_link'
+        %td= link_to page.title, edit_page_path(page), class: 'simple_link'
+        %td= page.frames.count
+        %td= page.updated_at

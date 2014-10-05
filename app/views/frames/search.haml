@@ -1,0 +1,38 @@
+= render 'campaigns_links'
+
+%h3.p20 Fill at least one field to search for the Campaign
+
+-# TODO: get rid of code duplicating in _form.haml
+= form_for @campaign, :url => { :action => 'search' }, :method => 'get' do |f|
+  -if @campaign.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@campaign.errors.count, "error")} prohibited this campaign from being saved:"
+      %ul
+        - @campaign.errors.full_messages.each do |msg|
+          %li= msg
+
+  %dl.pl20
+    %dt= f.label :name
+    %dd= f.text_field :name
+  %dl.pl20
+    %dt= f.label :subject
+    %dd= f.text_field :subject
+  %dl.pl20
+    %dt= f.label :from
+    %dd= f.text_field :from
+  %dl.pl20
+    %dt= f.label :reply_to
+    %dd= f.text_field :reply_to
+  %dl.pl20
+    %dt= 'Email contains'
+    %dd= text_field_tag 'content'
+  .clear10
+
+  = f.submit 'Search'
+
+
+-# TODO: get rid of this
+= javascript_tag "var edit_form = '#{['edit','new','search'].include? params[:action]}';"
+= javascript_tag "$(document).ready(function() {if (edit_form == 'false') {$('form :input').attr('disabled','disabled');}});"
+
+= javascript_include_tag "jquery_form.js"

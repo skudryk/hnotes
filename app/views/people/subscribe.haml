@@ -1,0 +1,4 @@
+- if @person && current_user
+  = link_to 'Back to person', person_path(@person)
+- elsif current_user
+  = link_to 'Back to people list', people_path

@@ -1,0 +1,17 @@
+= render 'campaigns_links'
+
+%p.pt10
+  Mapped Segment :
+  - if @campaign.get_segment
+    = link_to @campaign.get_segment.name, segment_path(@campaign.get_segment), target: '_blank'
+  - else
+    = '[none]'
+    .warning.mt10.fl{style: 'width: 40%'} Hint: To map Segment to this Campaign please edit mapped Email
+  .clear0
+
+%h2.p10 Editing campaign
+
+= render 'form'
+
+= javascript_include_tag "jquery_form.js"
+= javascript_include_tag "two_forms_ajax_submit.js"

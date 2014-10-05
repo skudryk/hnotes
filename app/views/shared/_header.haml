@@ -1,0 +1,84 @@
+%header#header.pt10
+  #logo.fl
+    .ml10
+      / used for identifying application version and root path
+      = link_to APP_VERSION, root_path
+    .mt5
+      Env: #{Rails.env}
+    .clear0
+    
+  %nav#top_menu.fr.pr10{role: 'navigation' }
+    - if current_user
+      .fl.mr20
+        %span Tool category:
+        %strong{style: 'color: violet'} #{current_category}
+      .fl
+        Welcome #{current_user.email}
+      .fl.ml20
+        %ul.menu
+          %li= link_to 'Log out', log_out_path
+      .fl.ml20{style: 'width: 600px'}
+        %a{name:"level_one"}
+        %ul.menu.fl{rel: 'level_1'}
+          %li.menu_item
+            -# outreach for non network experts???
+            = link_to 'Main', '#', rel: 'tool:outreach'
+          %li.menu_item
+            = link_to 'Recent', recent_path
+          %li.menu_item
+            = link_to 'My Dashboard', dashboard_path
+
+          #submenus
+
+
+            #outreach_base_tools.submenu{:style => 'right: 570px;'}
+              %ul.menu.clear0
+                %li.menu_item
+                  = link_to 'Books', books_path
+                %li.menu_item
+                  = link_to 'Pages', pages_path
+                %li.menu_item
+                  = link_to 'Nodes', nodes_path
+
+          .clear0
+
+
+        - if current_user_is_admin?
+          %li.menu_item
+            = link_to 'Users', users_path
+          %li.menu_item
+            = link_to 'Visitors', visitors_path
+
+
+    - else
+      %ul.menu
+        %li.menu_item
+          = link_to 'Log in', log_in_path
+        %li.menu_item
+          = link_to 'Sign up', sign_up_path
+  .clear0
+
+:javascript
+
+  $(document).ready(function() {
+   // expand menu links
+   $('ul.menu a').click(function() {
+     var el = $(this);
+     var enc_params = el[0].rel;
+     $('#submenus').children().hide();
+     if (enc_params) {
+       var container = null;
+       if (enc_params.indexOf('menu:') > -1) {
+         var container = enc_params.split('menu:')[1].split(' ')[0];
+         $('#' + container).show().siblings().hide();
+       }
+ 
+       if (enc_params.indexOf('offset:') > -1) {
+         var offset = enc_params.split('offset:')[1].split(' ')[0];
+         $('#' + container).css('right',offset);
+       }
+     }
+
+   });
+  });
+
