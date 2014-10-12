@@ -1,0 +1,23 @@
+
+.p10.small-text ( * - required fields )
+= form_for @campaign do |f|
+
+  -if @campaign.errors.any?
+    #error_explanation
+      h2= "# pluralize(@campaign.errors.count, "error")  prohibited this campaign from being saved:"
+      ul
+        - @campaign.errors.full_messages.each do |msg|
+          li= msg
+  - %w(name subject from from_name reply_to).each do |field|
+    dl
+      dt= f.label field
+      dd
+        - type = %w(from reply_to).include?(field) ? 'email' : 'text'
+        = f.text_field field, required: 'required', type: type
+        span.error *
+  input type: 'hidden', id: 'campaign_email_name', name: 'email[name]', value: @campaign.email_name 
+  input type: 'hidden', id: 'campaign_content_category', name: 'campaign[content_category]', value: 'newsletter' 
+  
+  .pt20
+    = f.submit 'Save' if ['edit','new'].include? params[:action]
+

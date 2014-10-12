@@ -1,22 +1,23 @@
-!!!
-%html{"ng-app" => true}
-  %head
-    %title
-      Hierarhical Notes
-    %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8'}
+doctype html
+html ng-app="hnotes" 
+  head
+    title
+      | Hierarhical Notes
+    meta http-equiv='Content-Type' content=('text/html; charset=UTF-8') 
     = javascript_include_tag 'application'
+    = javascript_include_tag 'lib/angular-tree-control'
     = stylesheet_link_tag    'application'
-    = stylesheet_link_tag    'angular-tree-control'
+    = stylesheet_link_tag    'tree-control'
     = yield :stylesheets
     = csrf_meta_tags
 
-  %body
+  body
     = render 'shared/header'
-    %section#body_content
+    section#body_content
       #ajax_loader
       #container
         = render 'shared/flashes'
         = yield
     = render :partial => 'shared/footer'
     = javascript_include_tag params[:controller]
-    = yield :javascripts
+

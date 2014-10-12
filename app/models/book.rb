@@ -15,8 +15,10 @@ class Book < ActiveRecord::Base
 
   # book or node can be hidden (password protected display)
   
-  def count_pages
-    self.pages.count
+  def count_frames
+    i =0
+    self.pages.map {|page| i += page.frames.count}
+    return i
   end
   
   def get_people_shared_to

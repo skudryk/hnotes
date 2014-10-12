@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
   def suggested_parent_list
     l = []
     if self.parent_id
-      p "parent: #{self.parent_id}"
+      #p "parent: #{self.parent_id}"
       @parent = get_parent
       if @parent
         l << @parent
@@ -45,9 +45,11 @@ class Page < ActiveRecord::Base
         if @parent.class.to_s != 'Book' and @parent.parent
           @parent.parent.pages.map {|n| l << n}
         end
-      end  
+      end
+    else
+      l = Book.all
     end
-    p "list: #{l}"
+    #p "list: #{l}"
     l
   end
     

@@ -7,11 +7,11 @@ class PagesController < ApplicationController
   end
 
   def move
-      @page = page.find(params[:id])
+      @page = Page.find(params[:id])
   end
 
   def hide
-      @page = page.find(params[:id])
+      @page = Page.find(params[:id])
   end
 
   def new
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
        flash[:error] = "Please create book first"
        redirect_to books_path
     end
-    @page = page.new
+    @page = Page.new
     @page.parent_id = session[:current_page]
     
   end

@@ -18,7 +18,7 @@
       %tr{:class => cycle('even','odd')}
         %td= link_to book.id, edit_book_path(book), class: 'simple_link'
         %td= link_to book.title, edit_book_path(book), class: 'simple_link'
-        %td= book.count_pages
+        %td= book.pages.count
         %td= book.updated_at
 
 - else

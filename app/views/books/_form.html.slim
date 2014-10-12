@@ -1,21 +1,21 @@
 = form_for @book do |f|
   -if @book.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
-      %ul
+      h2= "#{pluralize(@book.errors.count, "error")}  prohibited this book from being saved:"
+      ul
         - @book.errors.full_messages.each do |msg|
-          %li= msg
+          li= msg
 
   .field.mt10
     = f.label :title
     = f.text_field :title, required: 'required', size: 64, :ng => {:model => "book.title"}
-    %span.error *
+    span.error *
   .field.mt10
     = f.label :category
-    = f.select :category, options_for_select(Book::CATEGORIES), class: 'category', title: 'Click to select category', :ng => {:model => "book.category"}
+    = f.select :category, options_for_select(Book::CATEGORIES), class: 'category', title: 'Click to select category', :html => {"ng-model" => "book.category"}
   
 
-  .mt10 Shared to: #{@book.get_people_shared_to}
+  .mt10 Shared to: #{@book.get_people_shared_to || ''}
   .mt10 Number of pages / frames: #{@book.pages.count} / #{@book.count_frames}
 
   .mt20

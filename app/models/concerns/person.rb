@@ -18,6 +18,9 @@ module Person
           record.shared_to.include? self.id
       end
 
+      def is_admin?
+        false
+      end
      
     end
 end

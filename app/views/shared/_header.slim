@@ -1,0 +1,29 @@
+header#header.pt10
+  #logo.fl
+    .ml10
+    .mt5
+      | Env: #{Rails.env}
+    .clear0
+  nav.fr.pr10 id="top_menu"
+    - if current_user
+      .fl
+        | Welcome #{current_user.email}
+      .fl.ml20
+        ul.menu
+          li.menu_item
+            = link_to 'Books', books_path
+          li.menu_item
+            = link_to 'Pages', pages_path
+          li.menu_item
+            = link_to 'Frames', frames_path
+
+          .clear0
+    - else
+      ul.menu
+        li.menu_item
+          = link_to 'Log in', log_in_path
+        li.menu_item
+          = link_to 'Sign up', sign_up_path
+  .clear0
+
+
