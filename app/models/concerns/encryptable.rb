@@ -3,7 +3,7 @@ module Encryptable
 
   included do
 
-    attr_accessor :password #, :password_salt, :password_hash
+    attr_accessor :password # :password_salt, :password_hash
 
     def encrypted?
        !self.password_hash.nil?

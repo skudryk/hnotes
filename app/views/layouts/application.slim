@@ -5,9 +5,7 @@ html ng-app="hnotes"
       | Hierarhical Notes
     meta http-equiv='Content-Type' content=('text/html; charset=UTF-8') 
     = javascript_include_tag 'application'
-    = javascript_include_tag 'lib/angular-tree-control'
     = stylesheet_link_tag    'application'
-    = stylesheet_link_tag    'tree-control'
     = yield :stylesheets
     = csrf_meta_tags
 
@@ -19,5 +17,5 @@ html ng-app="hnotes"
         = render 'shared/flashes'
         = yield
     = render :partial => 'shared/footer'
-    = javascript_include_tag params[:controller]
+
 

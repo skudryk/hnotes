@@ -1,5 +1,8 @@
 Hnotes::Application.routes.draw do
   resources :statistics
+ # mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_for :users, controllers: {sessions: 'sessions',registrations: 'registrations'}
+
 =begin
   get "book/hide"
   get "book/move"

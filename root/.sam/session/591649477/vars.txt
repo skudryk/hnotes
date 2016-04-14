@@ -1,0 +1,8 @@
+vars_file=root/.sam/session/591649477//vars.txt
+sam_version=0.3.5
+base_dir=/usr/apps
+apps_dir=/usr/apps
+sam_config=/etc/sam.conf
+pkg=mc
+command="-i"
+#dbg point

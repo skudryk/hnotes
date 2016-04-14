@@ -11,7 +11,7 @@ module Person
 
       has_many :books, as: :person
 
-      VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+      VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i # better to use gem ?
       validates :email, presence: true, :uniqueness => true, format: { with: VALID_EMAIL_REGEX }
 
       def have_access?(record)

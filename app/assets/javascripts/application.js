@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require angular
-
-
+//= require sample
+//= require react
+//= require react_ujs
+//= require components

@@ -1,8 +1,0 @@
-%h3.m20 Upload list of persons to unsubscribe
-.small-text.p20
-  .pt10 Expected CSV file (header: master_id) with only one column.
-  .pt10 To create unsubscribe list from downloaded subscriptions list  you can execute next command (Linux,Mac),example:
-  .p10 cat unsubscribe_1328725971.csv | cut -d ',' -f 1 > unsubscribe.csv
-  .pt10 And then edit this file.
-
-= render :partial => 'shared/upload'

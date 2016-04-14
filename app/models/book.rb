@@ -13,8 +13,8 @@ class Book < ActiveRecord::Base
   
   CATEGORIES = %w(private protected read-only public)
 
-  # book or node can be hidden (password protected display)
-  
+  # NOTE: book or node can be hidden (password protected display)
+ 
   def count_frames
     i =0
     self.pages.map {|page| i += page.frames.count}

@@ -5,6 +5,7 @@ class PeopleController < ApplicationController
 
   skip_before_filter :authenticate, :only => :unsubscribe
 
+
   def index
     session[:people_sort_dir] = ['desc','asc'] if !session[:people_sort_dir]
     session[:people_sort_by] = params[:sort_by]

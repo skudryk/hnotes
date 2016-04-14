@@ -1,0 +1,20 @@
+vars_file=root/.sam/session/078966340//vars.txt
+sam_version=0.3.5
+base_dir=/usr/apps
+apps_dir=/usr/apps
+sam_config=/etc/sam.conf
+pkg=mc
+command="-i"
+#dbg point
+pkg=mc-4.7.4
+pkg_dir=/usr/apps/mc-4.7.4
+pkg_name=mc
+logfile=/usr/apps/mc-4.7.4/.log
+status_file=/usr/apps/mc-4.7.4/.status
+backup_dir=/usr/apps/mc-4.7.4/.backup
+base_dir_deep_level=2
+pdl1=3
+pdl2=4
+pdl3=5
+target_path_deep_level=1
+tpl2=3

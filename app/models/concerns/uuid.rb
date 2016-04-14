@@ -1,7 +1,7 @@
 module UUID
     extend ActiveSupport::Concern
         
-    #bad idea?
+    # bad idea?
     included do
             # old rails versions 
             set_primary_key 'uuid'

@@ -3,8 +3,7 @@ class Page < ActiveRecord::Base
   #include UUID
   include Encryptable
 
-  has_many :pages, as: :parent, :foreign_key => 'parent_id', :class_name => 'Page',
-                          :dependent => :delete_all
+  has_many :pages, as: :parent, :foreign_key => 'parent_id', :class_name => 'Page', :dependent => :delete_all
   belongs_to :parent, polymorphic: true, :foreign_key => 'parent_id'
   has_many :frames, foreign_key: 'parent_id'
   

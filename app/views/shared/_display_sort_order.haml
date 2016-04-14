@@ -1,9 +1,0 @@
-:javascript
-  $(document).ready(function() {
-    var sort_by = "#{@sort_by}";
-    sort_by = (sort_by.indexOf('_at') > 1) ? 'date' : sort_by;
-    var it = '#{image_tag('sort_' + @dir + '.png', class: 'sort_dir')}';
-    if (sort_by != '') {
-      $('table.listing').find('th#' + sort_by + '_col a').append(it);
-    }
-  });

@@ -1,7 +1,0 @@
-%h3.mt10.p10.fl New subscription
-.m20.fl
-  = link_to 'Back', subscriptions_path, {:class  => 'menu p7'}
-.clear10
-= render 'form'
-
-

@@ -33,6 +33,9 @@ h2.p10 Editing book
         td= link_to page.title, edit_page_path(page), class: 'simple_link'
         td= page.frames.count
         td= page.updated_at
+        
+  .tree-view ng-controller="treeCtrl"
+    .tree-classic treecontrol="" tree-model="treedata" options="tree_options" on-selection="showSelected(node)" selected-node="node1" 
+      | {{node.label}} ({{node.id}})
+    
 
-  .tree-classic treecontrol="" tree-model="book" options="treeOptions" on-selection="showSelected(node)" selected-node="node1" 
-    | {{node.label}} ({{node.id}})

@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
   
   before_filter :set_current, only: [:show, :edit]
+
   
   def index
       @books = Book.all.page(params[:page])

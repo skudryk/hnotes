@@ -1,5 +1,7 @@
 class Frame < ActiveRecord::Base
+
   #include UUID
+
    # validates :position, :parent, :content presence: true
   attr_accessor :protected_parent
 
@@ -14,7 +16,7 @@ class Frame < ActiveRecord::Base
   end
 
 
-private
+ private
 
   def encrypted_content
     return self.body unless protected_parent
