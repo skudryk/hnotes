@@ -21,12 +21,13 @@ gem  'slim-rails'
 gem 'jquery-rails'
 
 gem 'react-rails', '~> 1.0'
+gem 'showdown-rails' # markdown compiler js port
  
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -43,6 +44,10 @@ group :assets do
   gem 'uglifier', '>= 1.3.0'
   gem 'compass-rails'
   # gem 'bootstrap-sass', '~> 2.3.1.0'
+end
+
+group :development do
+  gem 'quiet_assets'
 end
 
 # Use ActiveModel has_secure_password

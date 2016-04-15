@@ -2,6 +2,8 @@ class Frame < ActiveRecord::Base
 
   #include UUID
 
+  has_many :comments
+
    # validates :position, :parent, :content presence: true
   attr_accessor :protected_parent
 

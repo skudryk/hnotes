@@ -11,81 +11,90 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914152829) do
+ActiveRecord::Schema.define(version: 20160414122830) do
 
-  create_table "activity_logs", force: true do |t|
-    t.string   "action"
-    t.string   "path"
-    t.string   "who"
+  create_table "activity_logs", force: :cascade do |t|
+    t.string   "action",     limit: 255
+    t.string   "path",       limit: 255
+    t.string   "who",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "admins", force: true do |t|
-    t.string   "email"
-    t.string   "password_hash"
-    t.string   "password_salt"
+  create_table "admins", force: :cascade do |t|
+    t.string   "email",         limit: 255
+    t.string   "password_hash", limit: 255
+    t.string   "password_salt", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "books", force: true do |t|
-    t.string   "title"
-    t.string   "category",      default: "public"
-    t.boolean  "hidden",        default: false
-    t.string   "shared_to",     default: ""
-    t.string   "password_hash"
-    t.string   "password_salt"
+  create_table "books", force: :cascade do |t|
+    t.string   "title",         limit: 255
+    t.string   "category",      limit: 255, default: "public"
+    t.boolean  "hidden",                    default: false
+    t.string   "shared_to",     limit: 255, default: ""
+    t.string   "password_hash", limit: 255
+    t.string   "password_salt", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "frames", force: true do |t|
+  create_table "comments", force: :cascade do |t|
+    t.string   "author"
+    t.text     "text"
+    t.boolean  "private",    default: false
+    t.integer  "frame_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "frames", force: :cascade do |t|
     t.integer  "parent_id"
-    t.string   "name"
-    t.string   "category"
+    t.string   "name",       limit: 255
+    t.string   "category",   limit: 255
     t.integer  "position"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",     default: false
+    t.boolean  "hidden",                 default: false
     t.text     "content"
     t.integer  "coord_x"
     t.integer  "coord_y"
-    t.string   "tags"
+    t.string   "tags",       limit: 255
   end
 
   add_index "frames", ["tags", "content", "category"], name: "index_frames_on_tags_and_content_and_category"
 
-  create_table "pages", force: true do |t|
-    t.string   "title"
-    t.string   "position",      default: "top"
+  create_table "pages", force: :cascade do |t|
+    t.string   "title",         limit: 255
+    t.string   "position",      limit: 255, default: "top"
     t.integer  "parent_id"
-    t.string   "parent_type",   default: "Page"
-    t.string   "shared_to"
-    t.boolean  "hidden",        default: false
-    t.string   "password_hash"
-    t.string   "password_salt"
+    t.string   "parent_type",   limit: 255, default: "Page"
+    t.string   "shared_to",     limit: 255
+    t.boolean  "hidden",                    default: false
+    t.string   "password_hash", limit: 255
+    t.string   "password_salt", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "category",      default: "html"
-    t.string   "tags"
+    t.string   "category",      limit: 255, default: "html"
+    t.string   "tags",          limit: 255
   end
 
-  create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "email"
-    t.string   "fullname"
+  create_table "users", force: :cascade do |t|
+    t.string   "username",      limit: 255
+    t.string   "email",         limit: 255
+    t.string   "fullname",      limit: 255
     t.boolean  "active"
-    t.string   "password_hash"
-    t.string   "password_salt"
+    t.string   "password_hash", limit: 255
+    t.string   "password_salt", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "visitors", force: true do |t|
-    t.string   "username"
-    t.string   "email"
+  create_table "visitors", force: :cascade do |t|
+    t.string   "username",   limit: 255
+    t.string   "email",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
