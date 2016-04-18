@@ -25,5 +25,10 @@ class Book < ActiveRecord::Base
     []
   end
 
+  def pages_list
+     self.pages.map(&:title).join(', ')
+  end
+
+
   
 end

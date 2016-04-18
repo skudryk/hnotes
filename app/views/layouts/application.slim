@@ -11,12 +11,12 @@ html ng-app="hnotes"
     = csrf_meta_tags
 
   body
-    = render 'shared/header'
+    #= render 'shared/header'
     section#body_content
       #ajax_loader
       #container
-        = render 'shared/flashes'
+        #= render 'shared/flashes'
         = yield
-    = render :partial => 'shared/footer'
+    #= render :partial => 'shared/footer'
 
 

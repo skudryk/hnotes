@@ -1,6 +1,12 @@
 class BooksController < ApplicationController
   
   before_filter :set_current, only: [:show, :edit]
+  before_action :set_book, only: [:show, :edit, :move, :hide]
+
+  respond_to :html, :json
+  
+  # hack, to test response by typing URLs in browser
+  layout -> (controller) { controller.request.format == 'json' ? false : 'application' }
 
   
   def index
@@ -10,11 +16,9 @@ class BooksController < ApplicationController
   end
 
   def move
-      @book = Book.find(params[:id])
   end
 
   def hide
-      @book = Book.find(params[:id])
   end
 
   def new
@@ -22,7 +26,7 @@ class BooksController < ApplicationController
   end
 
   def edit
-      redirect_to action: :show
+    redirect_to action: :show
   end
 
   
@@ -39,7 +43,6 @@ class BooksController < ApplicationController
   end
   
   def show
-    @book = Book.find(params[:id])
   end
   
   def update
@@ -49,6 +52,11 @@ class BooksController < ApplicationController
   
   def book_params
       params.require(:book).permit(:title, :category)
+  end
+
+
+  def set_book
+    @book = Book.find(params[:id])
   end
 
   def set_current

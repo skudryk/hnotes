@@ -129,7 +129,7 @@ var FrameForm = React.createClass({
 $(document).on("page:change", function() {
   var $content = $("#container pages");
   if ($content.length > 0) {
-    React.renderComponent(
+    ReactDOM.render(
       <FrameBox url="frames.json" pollInterval={2000} />, 
       document.getElementById('content') 
     ); 

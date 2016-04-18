@@ -42,6 +42,8 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.11)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.2)
     capistrano (3.4.0)
       i18n
@@ -62,6 +64,7 @@ GEM
     compass-rails (2.0.0)
       compass (>= 0.12.2)
     connection_pool (2.2.0)
+    debug_inspector (0.0.2)
     devise (3.5.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -167,6 +170,7 @@ GEM
       activesupport (>= 3.1, < 5.0)
       railties (>= 3.1, < 5.0)
       slim (~> 3.0)
+    spring (1.3.6)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -196,6 +200,11 @@ GEM
     uuidtools (2.1.5)
     warden (1.2.4)
       rack (>= 1.0)
+    web-console (2.2.1)
+      activemodel (>= 4.0)
+      binding_of_caller (>= 0.7.2)
+      railties (>= 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
 
 PLATFORMS
   ruby
@@ -216,8 +225,10 @@ DEPENDENCIES
   sdoc
   showdown-rails
   slim-rails
+  spring
   sqlite3
   turbolinks
   uglifier (>= 1.3.0)
   unicorn
   uuidtools
+  web-console

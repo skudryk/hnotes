@@ -1,21 +1,19 @@
 var Book = React.createClass({
   render: function() {
     return (
-      <div className="page panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">
-            {this.props.title}
-          </h3>
+      <div className="book">
+        <div className="book-heading">
+          <h3 className="book-title">{this.props.title}</h3>
         </div>
-        <div className="panel-body">
-          <h4 className="panel-title">{this.props.category}</h4>
+        <div className="book-pages">
+          category: <span className="book-title">{this.props.category}</span>
         </div>
       </div>
     );
   }
 });
 
-var BookBox = React.createClass({
+var BooksBox = React.createClass({
   loadBooksFromServer: function() {
     $.ajax({
       url: this.props.url,
@@ -60,8 +58,9 @@ var BookBox = React.createClass({
   render: function() {
     return (
       <div className="bookBox">
-        <h1>Books</h1>
+        <h2>Books</h2>
         <BookList data={this.state.data} />
+        <hr />
         <BookForm onBookSubmit={this.handleBookSubmit} />
       </div>
     );
@@ -70,12 +69,11 @@ var BookBox = React.createClass({
 
 var BookList = React.createClass({
   render: function() {
+    console.log('props:',this.props);
     var books = this.props.data.map(function(book, index) {
       return (
-        // `key` is a React-specific concept and is not mandatory for the
-        // purpose of this tutorial. if you're curious, see more here:
-        // http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
-        <Book date={book.updated_at} category={book.category} name={book.name} key={index}>
+        // `key` is a React-specific concept to recognize dynamic children items 
+        <Book date={book.updated_at} category={book.category} title={book.title} name={book.name} key={index}>
           {book.pages_list}
         </Book>
       );
@@ -103,9 +101,9 @@ var BookForm = React.createClass({
   },
   render: function() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">Add a Book</div>
-        <div className="panel-body">
+      <div className="panel">
+        <div className="book-heading">Add a Book</div>
+        <div className="book-body">
           <form className="bookForm " onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label className="control-label" forName="titleInput">Name</label>
@@ -124,10 +122,10 @@ var BookForm = React.createClass({
 });
 
 $(document).on("page:change", function() {
-  var $content = $("#container books");
+  var $content = $("#container .books");
   if ($content.length > 0) {
-    React.renderComponent(
-      <BookBox url="books.json" pollInterval={3000} />, 
+    ReactDOM.render(
+      <BooksBox url="books.json" pollInterval={3000} />, 
       $content[0] 
     ); 
   }

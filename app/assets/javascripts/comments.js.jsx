@@ -128,5 +128,5 @@ var CommentForm = React.createClass({
 
 // $(document).on("page:change", function() {
 //   var $content = $("#content");
-//   if ($content.length > 0) {  React.renderComponent(<CommentBox url="comments.json" pollInterval={2000} />, document.getElementById('content') ); }
+//   if ($content.length > 0) {  ReactDOM.render(<CommentBox url="comments.json" pollInterval={2000} />, document.getElementById('content') ); }
 // })
