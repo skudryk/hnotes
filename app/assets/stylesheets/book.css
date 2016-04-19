@@ -3,6 +3,11 @@
   They will automatically be included in application.css.
 */
 
+.book-container a {
+    cursor: pointer;
+    text-decoration: none;
+}
+.book-container a:hover {text-decoration: none;}
 
 .book-heading {
   font-weight: 700;
@@ -12,4 +17,21 @@
 .book-body {
   width: 50%;
   padding: 20px;
+}
+
+.book-collapse {
+
+}
+
+.book-pages {
+  display: none;
+  padding-left: 20px;
+}
+
+.book-edit {
+  margin-top: 20px;
+  padding: 20px;
+  display: none;
+  border: 1px dashed gray;
+  width: 60%;
 }
