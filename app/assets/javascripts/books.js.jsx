@@ -4,30 +4,31 @@ var Book = React.createClass({
   },
   render: function() {
     var self = this;
+    var pages = self.props.pages || [];
     return (
       <div className="book-container" id={'book_' + this.props.id}>
         <div className="book-heading">
-          <h3 className="book-title">
-            <a className="book-collapse" onClick={self.expandTree}>{self.state.indicator}</a>
+          <strong className="book-title">
+            <a className="book-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
             <a title={this.props.category} onClick={self.editBook}> {this.props.title}</a>
-          </h3>
+          </strong>
         </div>
         <div className="book-pages">
-          { this.props.pages.map(function(page, i) {
+          { pages.map(function(page, i) {
             return (
-              <div key={i}><a onClick={this.expandTree}>{page.title}</a></div>
+              <div className="book-page" key={i}><a onClick={self.expandTree}>{page.title}</a></div>
             );
           })}
         </div>
         <div className="book-edit">
-           <BookForm onBookSubmit={self.props.parent.handleBookSubmit} caps="Edit book" book={this.props} />
+           <BookForm onBookSubmit={self.props.parent.handleBookSubmit} caps="Edit book" book={self.props} />
         </div>
       </div>
     );
   },
   expandTree: function(event) {
     var book_id = this.props.id;
-    console.log('this',this);
+    //console.log('this',this);
     $('#book_' + book_id + ' .book-pages').toggle();
     this.setState({indicator: (this.state.indicator == '+') ? '-' : '+'});
     return;
@@ -53,18 +54,25 @@ var BooksBox = React.createClass({
     });
   },
   handleBookSubmit: function(book) {
+    console.log('BooksBox.handleBookSubmit',book);
     var books = this.state.data;
-    books.push(book);
+    var method = (book.id) ? 'put' : 'post';
+    var url = (book.id) ? '/books/' + book.id : this.props.url; 
+    if (!book.id) {
+      books.push(book);
+    }
     this.setState({data: books}, function() {
       // `setState` accepts a callback. To avoid (improbable) race condition,
       // `we'll send the ajax request right after we optimistically set the new
       // `state.
       $.ajax({
-        url: this.props.url,
+        url: url,
         dataType: 'json',
-        type: 'POST',
+        type: method,
         data: { book: book },
         success: function(data) {
+          console.log('response:',data);
+          showFlashMessage(data);
         }.bind(this),
         error: function(xhr, status, err) {
           books.pop();
@@ -81,13 +89,21 @@ var BooksBox = React.createClass({
     this.loadBooksFromServer();
     //setInterval(this.loadBooksFromServer, this.props.pollInterval);
   },
+  showBookForm: function() {
+    $('.new-book').toggle();
+    return;
+  },
   render: function() {
+    // here we set parent property to have ability to access own methods from child objects
     return (
-      <div className="bookBox">
+      <div className="books-box">
         <h2>Books</h2>
         <BookList data={this.state.data} parent={this} />
         <hr />
-        <BookForm onBookSubmit={this.handleBookSubmit} />
+        <div className="p20"><a onClick={this.showBookForm} >New book</a></div>
+        <div className="new-book">
+          <BookForm onBookSubmit={this.handleBookSubmit} />
+        </div>
       </div>
     );
   }
@@ -100,12 +116,12 @@ var BookList = React.createClass({
     var books = this.props.data.map(function(book, index) {
       return (
         // `key` is a React-specific concept to recognize dynamic children items 
-        <Book date={book.updated_at} category={book.category} id={book.id} pages={book.pages} title={book.title} title={book.title} parent={self.props.parent} key={index}>
+        <Book date={book.updated_at} category={book.category} id={book.id} pages={book.pages} title={book.title} parent={self.props.parent} key={index}>
         </Book>
       );
     });
     return (
-      <div className="book-list">
+      <div className="books-list">
         {books}
       </div>
     );
@@ -115,17 +131,24 @@ var BookList = React.createClass({
 var BookForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    var title = this.refs.title.getDOMNode().value.trim();
-    var category = this.refs.category.getDOMNode().value.trim();
-    if (!title || !category) {
+    var data = {};
+    var attrs = ['title','category','id'];
+    for(var i=0; i < attrs.length; i++) {
+      data[attrs[i]] = this.refs[attrs[i]].value.trim();
+    }
+    if (!data.title || !data.category) { // primitive validation
       return;
     }
-    this.props.onBookSubmit({title: title, category: category});
-    this.refs.title.getDOMNode().value = '';
-    this.refs.category.getDOMNode().value = '';
+    this.props.onBookSubmit(data);
+    if (!data.id) {
+      for(var i=0; i < attrs.length; i++) {
+        this.refs[attrs[i]].value = '';
+      }
+    }
     return;
   },
   render: function() {
+    this.props.method = (this.props.book) ? 'put' : 'post';
     var book = this.props.book || {};
     return (
       <div className="panel">
@@ -140,7 +163,8 @@ var BookForm = React.createClass({
               <label className="control-label" forName="categoryInput">Category</label>
               <input type="text" className="form-control" id="categoryInput" rows="3" placeholder="Category" ref="category" defaultValue={book.category} />
             </div>
-            <input type="submit" className="btn btn-primary" value="Create" />
+            <input type="hidden" defaultValue={book.id} ref="id" />
+            <input type="submit" className="btn btn-primary btn-large" value="Save" />
           </form>
         </div>
       </div>

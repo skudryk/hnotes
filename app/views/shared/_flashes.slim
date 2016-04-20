@@ -1,8 +1,7 @@
-- if alert
-  p.alert.error
-    = alert
+.flash 
+  - flash.each do |name, msg|
+    .alert class="alert-#{name}"
+      = msg
+    
+  
 
-p#notice.m10
-  = flash.now[:notice]
-p#error
-  = flash.now[:error]

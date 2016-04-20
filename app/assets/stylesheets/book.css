@@ -3,7 +3,7 @@
   They will automatically be included in application.css.
 */
 
-.book-container a {
+#container a {
     cursor: pointer;
     text-decoration: none;
 }
@@ -11,7 +11,7 @@
 
 .book-heading {
   font-weight: 700;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
 }
 
 .book-body {
@@ -23,10 +23,12 @@
 
 }
 
-.book-pages {
+.book-pages, .new-book {
   display: none;
   padding-left: 20px;
 }
+
+.book-page {padding: 5px;}
 
 .book-edit {
   margin-top: 20px;
@@ -34,4 +36,17 @@
   display: none;
   border: 1px dashed gray;
   width: 60%;
+}
+
+.btn-large {
+  padding: 5px 25px !important;
+  height: 30px !important;
+}
+
+.flash {
+  margin-top: 5px;
+}
+
+.p20 {
+  padding: 20px;
 }

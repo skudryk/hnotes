@@ -34,24 +34,43 @@ class BooksController < ApplicationController
       p params[:book].inspect
       @book = Book.new(book_params)
       if @book.save
-          flash[:notice] = "#{@book.title} has been successfully created"
+          @message = flash[:success] = "#{@book.title} has been successfully created"
+          @result = 'success'
           set_current
       else
-          flash[:error] = "Form is invalid"
+          @message = flash[:danger] = "Form is invalid"
+          @result = 'error'
       end
-      redirect_to books_path
+      respond_to do |format|
+        format.html { redirect_to books_path }
+        format.json { render template: 'books/show' }
+      end
   end
   
   def show
+    @message = ""
   end
   
   def update
+    @book = Book.find(params[:id])
+    @book.update(book_params)
+    errors = @book.errors.full_messages
+    if errors.empty?
+        @message = flash[:success] = "#{@book.title} has been successfully updated"
+        set_current
+    else
+        @message = flash[:danger] = "Form is invalid"
+    end
+    respond_to do |format|
+      format.html { redirect_to books_path }
+      format.json { render template: 'books/show'}
+    end
   end
   
   private
   
   def book_params
-      params.require(:book).permit(:title, :category)
+      params.require(:book).permit(:title, :category, :id)
   end
 
 

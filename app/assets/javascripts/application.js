@@ -19,3 +19,10 @@
 //= require components
 //= require turbolinks
 //= require_tree .
+
+function showFlashMessage(data) {
+  var msg = (data.message.shift)  ? data.message[0] : data.message;
+  $('.flash').html('<div class="alert alert-' + data.result + '">' + msg + '</div');
+  var delay = 60000;
+  setTimeout(function() { console.log('clear flash'); $('.flash').html(''); }, delay);
+}
