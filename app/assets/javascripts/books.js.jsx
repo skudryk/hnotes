@@ -14,11 +14,7 @@ var Book = React.createClass({
           </strong>
         </div>
         <div className="book-pages">
-          { pages.map(function(page, i) {
-            return (
-              <div className="book-page" key={i}><a onClick={self.expandTree}>{page.title}</a></div>
-            );
-          })}
+          <PagesSet pages={pages} book={this} />
         </div>
         <div className="book-edit">
            <BookForm onBookSubmit={self.props.parent.handleBookSubmit} caps="Edit book" book={self.props} />

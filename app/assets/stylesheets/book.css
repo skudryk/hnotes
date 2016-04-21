@@ -19,18 +19,18 @@
   padding: 20px;
 }
 
-.book-collapse {
+.book-collapse, .page-collapse {
 
 }
 
-.book-pages, .new-book {
+.book-pages, .page-subpages {
   display: none;
   padding-left: 20px;
 }
 
 .book-page {padding: 5px;}
 
-.book-edit {
+.book-edit, .new-book, .page-edit, .new-page {
   margin-top: 20px;
   padding: 20px;
   display: none;
