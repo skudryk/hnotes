@@ -7,23 +7,27 @@ var Page = React.createClass({
     console.log('page:',self.props);
     var frames = self.props.frames || [];
     var subpages = self.props.pages || [];
+    var sel = 'page_' + self.props.id;
+    var sel1 = '#' + sel + ' .modal';
     return (
-      <div className="page-container" id={'page_' + self.props.id}>
-        <div className="page-heading">
-          <strong className="page-title">
-            <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
-            <a title={this.props.category} onClick={self.editPage}> {self.props.title}</a>
-          </strong>
-        </div>
-        <div className="page-subpages pull-left">
-          <PagesList data={subpages} parent_page={self} />
+      <div className="page-container" id={sel}>
+        <div className="pull-left">      
+          <div className="page-heading">
+            <strong className="page-title">
+              <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
+              <a data-toggle="modal" data-target={sel1} data-keyboard="true" title={this.props.category} onClick={self.editPage}> {self.props.title}
+              </a>
+            </strong>
+          </div>
+          <div className="page-subpages">
+            <PagesList data={subpages} parent_page={self} />
+          </div>
         </div>
         <div className="page-frames pull-left">
           <FramesList data={frames} page={this} />
         </div>
-        <div className="page-edit">
-           <PageForm onPageSubmit={self.props.page_set.handlePageSubmit} heading="Edit page" page={self.props} />
-        </div>
+        <div className="clearfix"></div>
+        <PageForm onPageSubmit={self.props.page_set.handlePageSubmit} heading="Edit page" page={self.props} />
       </div>
     );
   },
@@ -143,29 +147,34 @@ var PageForm = React.createClass({
     this.props.method = (this.props.page) ? 'put' : 'post';
     var page = this.props.page || {};
     return (
-      <div className="panel">
-        <div className="page-heading"> {this.props.heading || 'Add a Page' }</div>
-        <div className="page-body">
-          <form className="page-form " onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label className="control-label" forName="titleInput">Name</label>
-              <input type="text" id="titleInput" className="form-control" placeholder="Name" ref="title" defaultValue={page.title} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="categoryInput">Category</label>
-              <input type="text" className="form-control" id="categoryInput" rows="3" placeholder="Category" ref="category" defaultValue={page.category} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="page_tags">Tags</label>
-              <input type="text" id="page_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={page.tags} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="page_hidden">Private</label>
-              <input type="checkbox" id="page_hidden" className="form-control" ref="hidden" defaultValue={page.hidden} />
-            </div>
-            <input type="hidden" defaultValue={page.id} ref="id" />
-            <input type="submit" className="btn btn-primary btn-large" value="Save" />
-          </form>
+      <div className="modal modal-dialog modal-sm fade" role="dialog" tabindex="-1">
+        <div className="modal-content">
+          <div className="modal-header">
+            <strong>{this.props.heading || 'Add a Page' } {page.title}</strong>
+            <button type="button" className="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div className="modal-body">
+            <form className="page-form " onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <label className="control-label" forName="titleInput">Name</label>
+                <input type="text" id="titleInput" className="form-control" placeholder="Name" ref="title" defaultValue={page.title} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="categoryInput">Category</label>
+                <input type="text" className="form-control" id="categoryInput" rows="3" placeholder="Category" ref="category" defaultValue={page.category} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="page_tags">Tags</label>
+                <input type="text" id="page_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={page.tags} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="page_hidden">Private</label>
+                <input type="checkbox" id="page_hidden" className="form-control" ref="hidden" defaultValue={page.hidden} />
+              </div>
+              <input type="hidden" defaultValue={page.id} ref="id" />
+              <input type="submit" className="btn btn-primary btn-large" value="Save" />
+            </form>
+          </div>
         </div>
       </div>
     );
