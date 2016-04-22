@@ -37,7 +37,11 @@ var Page = React.createClass({
     return;
   },
   editPage: function(event) {
-    $('#page_' + this.props.id + ' .page-edit').toggle();
+    var modal = $('#page_' + this.props.id + ' .modal');
+    modal.on('shown.bs.modal', function() { // not fired?
+      console.log('tp');
+      modal.focus();
+    });
     return;
   }
 });
@@ -147,7 +151,7 @@ var PageForm = React.createClass({
     this.props.method = (this.props.page) ? 'put' : 'post';
     var page = this.props.page || {};
     return (
-      <div className="modal modal-dialog modal-sm fade" role="dialog" tabindex="-1">
+      <div className="modal modal-dialog modal-sm fade" role="dialog" tabIndex="-1">
         <div className="modal-content">
           <div className="modal-header">
             <strong>{this.props.heading || 'Add a Page' } {page.title}</strong>
