@@ -8,14 +8,14 @@ var Page = React.createClass({
     var frames = self.props.frames || [];
     var subpages = self.props.pages || [];
     var sel = 'page_' + self.props.id;
-    var sel1 = '#' + sel + ' .modal';
+    var sel1 = '#' + sel + ' > .modal';
     return (
       <div className="page-container" id={sel}>
           <div className="page-heading">
             <strong className="page-title">
               <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
-              <a title={this.props.category} onClick={self.showContent}> {self.props.title} </a>
-              <a data-toggle="modal" data-target={sel1} data-keyboard="true" onClick={self.editPage}>
+              <a title={this.props.category} onClick={self.showContent}> {self.props.title} ({frames.length}) </a> &nbsp;
+              <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Edit page" onClick={self.editPage}>
                 <icon className="icon-edit"></icon>
               </a>
             </strong>
@@ -156,7 +156,7 @@ var PageForm = React.createClass({
     this.props.method = (this.props.page) ? 'put' : 'post';
     var page = this.props.page || {};
     return (
-      <div className="modal modal-dialog modal-sm fade" role="dialog" tabIndex="-1">
+      <div className="modal modal-dialog modal-lg fade" role="dialog" tabIndex="-1">
         <div className="modal-content">
           <div className="modal-header">
             <strong>{this.props.heading || 'Add a Page' } {page.title}</strong>
@@ -177,8 +177,8 @@ var PageForm = React.createClass({
                 <input type="text" id="page_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={page.tags} />
               </div>
               <div className="form-group">
-                <label className="control-label" forName="page_hidden">Private</label>
-                <input type="checkbox" id="page_hidden" className="form-control" ref="hidden" defaultValue={page.hidden} />
+                <label className="control-label" forName="page_hidden">Private</label> &nbsp;
+                <input type="checkbox" id="page_hidden" ref="hidden" defaultValue={page.hidden} />
               </div>
               <input type="hidden" defaultValue={page.id} ref="id" />
               <input type="submit" className="btn btn-primary btn-large" value="Save" />

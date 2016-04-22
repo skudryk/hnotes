@@ -5,21 +5,25 @@ var Frame = React.createClass({
   },
   render: function() {
     var self = this;
+    var sel = 'frame_' + self.props.id;
+    var sel1 = '#' + sel + ' > .modal';
     return (
-      <div className="frame-container" id={'frame_' + this.props.id}>
+      <div className="frame-container" id={sel}>
         <div className="frame-heading">
           <strong className="frame-title">
-            <a title={this.props.category} onClick={self.editFrame}> {this.props.title}</a>
-          </strong>
+            {this.props.title}
+          </strong> &nbsp;
+          <a data-toggle="modal" data-target={sel1} data-keyboard="true"
+             title="Edit frame" onClick={self.editFrame}>
+                <icon className="icon-edit"></icon>
+          </a>
         </div>
-        <div className="frame-edit">
-           <FrameForm onFrameSubmit={self.props.frame_set.handleFrameSubmit} heading="Edit frame" frame={self.props} />
-        </div>
+        <FrameForm onFrameSubmit={self.props.frame_set.handleFrameSubmit} heading="Edit frame" frame={self.props} />
       </div>
     );
   },
   editFrame: function(event) {
-    $('#frame_' + this.props.id + ' .frame-edit').toggle();
+    //$('#frame_' + this.props.id + ' .frame-edit').toggle();
     return;
   }
 });
@@ -75,9 +79,9 @@ var FramesSet = React.createClass({
     var fsid = "frames-set-" + this.props.page.props.id;
     var sel2 = '#' + fsid + ' .modal';
     return (
-      <div id={fsid}>
+      <div id={fsid} className="m20">
         <FramesList data={this.state.data} />
-        <a data-toggle="modal" data-target={sel2} data-keyboard="true" onClick={self.addFrame}>Add Content</a>
+        <a className="pt20" data-toggle="modal" data-target={sel2} data-keyboard="true" onClick={self.addFrame}>Add Content</a>
         <FrameForm onFrameSubmit={this.handleFrameSubmit} />
       </div>
     );
@@ -88,9 +92,6 @@ var FramesList = React.createClass({
   render: function() {
     var frames = this.props.data.map(function(frame, index) {
       return (
-        // `key` is a React-specific concept and is not mandatory for the
-        // purpose of this tutorial. if you're curious, see more here:
-        // http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
         <Frame date={frame.date} key={index}>
           {frame.text}
         </Frame>
@@ -127,10 +128,10 @@ var FrameForm = React.createClass({
     this.props.method = (this.props.frame) ? 'put' : 'post';
     var frame = this.props.frame || {};
     return (
-      <div className="modal modal-dialog modal-lg fade" role="dialog" tabIndex="-1">
+      <div className="modal modal-dialog modal-lg fade" role="dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <strong>{this.props.heading || 'New frame' } {frame.title}</strong>
+            <strong className="pl20">{this.props.heading || 'New frame' } {frame.title}</strong>
             <button type="button" className="close" data-dismiss="modal">&times;</button>
           </div>
           <div className="modal-body">
@@ -148,8 +149,8 @@ var FrameForm = React.createClass({
                 <input type="text" id="frame_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={frame.tags} />
               </div>
               <div className="form-group">
-                <label className="control-label" forName="frame_hidden">Private</label>
-                <input type="checkbox" id="frame_hidden" className="form-control" ref="hidden" defaultValue={frame.hidden} />
+                <label className="control-label" forName="frame_hidden">Private</label> &nbsp;
+                <input type="checkbox" id="frame_hidden" ref="hidden" defaultValue={frame.hidden} />
               </div>
               <div className="form-group">
                 <label className="control-label" forName="frame_body">Content</label>

@@ -50,12 +50,15 @@
 
 .p20 {padding: 20px;}
 .pl20 {padding-left: 20px;}
+.pt20 {padding-top: 20px;}
+.m20 {margin: 20px;}
 
 .page-container {position: relative;}
+.frame-container {border: 1px dotted black; padding: 10px;}
 
 /*.modal {left: 20% !important;}*/
 .modal {z-index: 9999;}
-.modal-body {padding-left: 20px;}
+.modal-body {padding-left: 10% !important; width: 80%;}
 .modal-body input[type="submit"] {
   margin-left: 40%;
   width: 100px;

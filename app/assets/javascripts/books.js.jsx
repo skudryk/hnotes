@@ -5,20 +5,24 @@ var Book = React.createClass({
   render: function() {
     var self = this;
     var pages = self.props.pages || [];
+    var sel = 'book_' + self.props.id;
+    var sel1 = '#' + sel + ' > .modal';
     return (
-      <div className="book-container" id={'book_' + this.props.id}>
+      <div className="book-container" id={sel}>
         <div className="book-heading">
           <strong className="book-title">
             <a className="book-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
-            <a title={this.props.category} onClick={self.editBook}> {this.props.title}</a>
-          </strong>
+            {this.props.title}
+          </strong> &nbsp;
+          <a data-toggle="modal" data-target={sel1} data-keyboard="true"
+             title="Edit book" onClick={self.editBook}>
+                <icon className="icon-edit"></icon>
+          </a>
         </div>
         <div className="book-pages">
           <PagesSet pages={pages} book={this} />
         </div>
-        <div className="book-edit">
-           <BookForm onBookSubmit={self.props.parent.handleBookSubmit} caps="Edit book" book={self.props} />
-        </div>
+        <BookForm onBookSubmit={self.props.parent.handleBookSubmit} caps="Edit book" book={self.props} />
       </div>
     );
   },
@@ -30,9 +34,11 @@ var Book = React.createClass({
     return;
   },
   editBook: function(event) {
-    var book_id = this.props.id;
-    $('#book_' + book_id + ' .book-edit').toggle();
-    return;
+    //var modal = $('#book_' + this.props.id + ' .modal');
+    // modal.on('hidden.bs.modal', function() { // not fired?
+    //   $('.modal-backdrop').remove();
+    // });
+    return true;
   }
 });
 
@@ -147,21 +153,26 @@ var BookForm = React.createClass({
     this.props.method = (this.props.book) ? 'put' : 'post';
     var book = this.props.book || {};
     return (
-      <div className="panel">
-        <div className="book-heading"> {this.props.caps || 'Add a Book' }</div>
-        <div className="book-body">
-          <form className="bookForm " onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label className="control-label" forName="titleInput">Name</label>
-              <input type="text" id="titleInput" className="form-control" placeholder="name" ref="title" defaultValue={book.title} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="categoryInput">Category</label>
-              <input type="text" className="form-control" id="categoryInput" rows="3" placeholder="Category" ref="category" defaultValue={book.category} />
-            </div>
-            <input type="hidden" defaultValue={book.id} ref="id" />
-            <input type="submit" className="btn btn-primary btn-large" value="Save" />
-          </form>
+      <div className="modal modal-dialog modal-lg" role="dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <strong className="pl20">{this.props.heading || 'New book' } {book.title}</strong>
+            <button type="button" className="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div className="modal-body">
+            <form className="bookForm " onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <label className="control-label" forName="titleInput">Name</label>
+                <input type="text" id="titleInput" className="form-control" placeholder="name" ref="title" defaultValue={book.title} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="categoryInput">Category</label>
+                <input type="text" className="form-control" id="categoryInput" rows="3" placeholder="Category" ref="category" defaultValue={book.category} />
+              </div>
+              <input type="hidden" defaultValue={book.id} ref="id" />
+              <input type="submit" className="btn btn-primary btn-large" value="Save" />
+            </form>
+          </div>
         </div>
       </div>
     );
