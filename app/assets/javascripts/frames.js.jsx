@@ -24,7 +24,7 @@ var Frame = React.createClass({
   }
 });
 
-
+// page content
 var FramesSet = React.createClass({
   loadFramesFromServer: function() {
     $.ajax({
@@ -61,16 +61,23 @@ var FramesSet = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {data: this.props.data || []};
   },
   //componentDidMount: function() {
   //  this.loadFramesFromServer();
     //setInterval(this.loadFramesFromServer, this.props.pollInterval);
   //},
+  addFrame: function() {
+    //$('.modal').show();
+  },
   render: function() {
+    console.log('props for frameset:', this.props);
+    var fsid = "frames-set-" + this.props.page.props.id;
+    var sel2 = '#' + fsid + ' .modal';
     return (
-      <div className="frames">
-        <FrameList data={this.state.data} />
+      <div id={fsid}>
+        <FramesList data={this.state.data} />
+        <a data-toggle="modal" data-target={sel2} data-keyboard="true" onClick={self.addFrame}>Add Content</a>
         <FrameForm onFrameSubmit={this.handleFrameSubmit} />
       </div>
     );
@@ -120,33 +127,38 @@ var FrameForm = React.createClass({
     this.props.method = (this.props.frame) ? 'put' : 'post';
     var frame = this.props.frame || {};
     return (
-      <div className="widget">
-        <div className="frame-heading"> {this.props.heading || 'Add a Frame' }</div>
-        <div className="frame-body">
-          <form className="frame-form " onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label className="control-label" forName="frame_name">Name</label>
-              <input type="text" id="frame_name" className="form-control" placeholder="Name" ref="name" defaultValue={frame.name} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="frame_category">Category</label>
-              <input type="text" className="form-control" id="frame_category" rows="3" placeholder="Category" ref="category" defaultValue={frame.category} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="frame_tags">Tags</label>
-              <input type="text" id="frame_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={frame.tags} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="frame_hidden">Private</label>
-              <input type="checkbox" id="frame_hidden" className="form-control" ref="hidden" defaultValue={frame.hidden} />
-            </div>
-            <div className="form-group">
-              <label className="control-label" forName="frame_body">Content</label>
-              <textarea id="frame_body" className="form-control" placeholder="Type here text" ref="body" defaultValue={frame.body} />
-            </div>
-            <input type="hidden" defaultValue={frame.id} ref="id" />
-            <input type="submit" className="btn btn-primary btn-large" value="Save" />
-          </form>
+      <div className="modal modal-dialog modal-lg fade" role="dialog" tabIndex="-1">
+        <div className="modal-content">
+          <div className="modal-header">
+            <strong>{this.props.heading || 'New frame' } {frame.title}</strong>
+            <button type="button" className="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div className="modal-body">
+            <form className="frame-form " onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <label className="control-label" forName="frame_name">Name</label>
+                <input type="text" id="frame_name" className="form-control" placeholder="Name" ref="name" defaultValue={frame.name} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="frame_category">Category</label>
+                <input type="text" className="form-control" id="frame_category" rows="3" placeholder="Category" ref="category" defaultValue={frame.category} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="frame_tags">Tags</label>
+                <input type="text" id="frame_tags" className="form-control" placeholder="health, food" ref="tags" defaultValue={frame.tags} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="frame_hidden">Private</label>
+                <input type="checkbox" id="frame_hidden" className="form-control" ref="hidden" defaultValue={frame.hidden} />
+              </div>
+              <div className="form-group">
+                <label className="control-label" forName="frame_body">Content</label>
+                <textarea id="frame_body" className="form-control" placeholder="Type here text" ref="body" defaultValue={frame.body} />
+              </div>
+              <input type="hidden" defaultValue={frame.id} ref="id" />
+              <input type="submit" className="btn btn-primary btn-large" value="Save" />
+            </form>
+          </div>
         </div>
       </div>
     );

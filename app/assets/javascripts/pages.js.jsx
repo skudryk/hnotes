@@ -1,6 +1,6 @@
 var Page = React.createClass({
    getInitialState: function() {
-    return {collapsed: true, indicator: '+'};
+    return {collapsed: true, indicator: (this.props.frames) ? '+' : '|'};
   },
   render: function() {
     var self = this;
@@ -11,20 +11,20 @@ var Page = React.createClass({
     var sel1 = '#' + sel + ' .modal';
     return (
       <div className="page-container" id={sel}>
-        <div className="pull-left">      
           <div className="page-heading">
             <strong className="page-title">
               <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
-              <a data-toggle="modal" data-target={sel1} data-keyboard="true" title={this.props.category} onClick={self.editPage}> {self.props.title}
+              <a title={this.props.category} onClick={self.showContent}> {self.props.title} </a>
+              <a data-toggle="modal" data-target={sel1} data-keyboard="true" onClick={self.editPage}>
+                <icon className="icon-edit"></icon>
               </a>
             </strong>
           </div>
           <div className="page-subpages">
             <PagesList data={subpages} parent_page={self} />
           </div>
-        </div>
-        <div className="page-frames pull-left">
-          <FramesList data={frames} page={this} />
+        <div className="page-frames hidden">
+          <FramesSet data={frames} page={this} />
         </div>
         <div className="clearfix"></div>
         <PageForm onPageSubmit={self.props.page_set.handlePageSubmit} heading="Edit page" page={self.props} />
@@ -36,6 +36,11 @@ var Page = React.createClass({
     this.setState({indicator: (this.state.indicator == '+') ? '-' : '+'});
     return;
   },
+  showContent: function(event) {
+    $('#content').append($('#page_' + this.props.id + ' .page-frames').html());
+    return;
+  },
+
   editPage: function(event) {
     var modal = $('#page_' + this.props.id + ' .modal');
     modal.on('shown.bs.modal', function() { // not fired?

@@ -63,10 +63,11 @@
 
 .page-frames {
   margin-left: 5px;
-  width: 70%;
-  border: 1px dashed gray;
 }
 
 .page-edit {
   position: relative;
 }
+
+#navigation {width: 20%;}
+#content {width: 80%;}

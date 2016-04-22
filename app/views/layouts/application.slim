@@ -16,7 +16,10 @@ html ng-app="hnotes"
       #ajax_loader
       #container
         #= render 'shared/flashes'
-        = yield
+        #navigation.pull-left
+          = yield
+        #content.pull-left
+        .clearfix
     #= render :partial => 'shared/footer'
 
 
