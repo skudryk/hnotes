@@ -1,6 +1,6 @@
 var Page = React.createClass({
    getInitialState: function() {
-    return {collapsed: true, indicator: (this.props.frames) ? '+' : '|'};
+    return {collapsed: true, indicator: (this.props.frames) ? '+' : '|', menu: {show: 0, coords: {}}};
   },
   render: function() {
     var self = this;
@@ -9,14 +9,19 @@ var Page = React.createClass({
     var subpages = self.props.pages || [];
     var sel = 'page_' + self.props.id;
     var sel1 = '#' + sel + ' > .modal';
+    var book_sel = '#book_' + this.props.book.props.id;
+    var sel2 = book_sel + ' .pages-set > .modal';
     return (
       <div className="page-container" id={sel}>
           <div className="page-heading">
             <strong className="page-title">
               <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
-              <a title={this.props.category} onClick={self.showContent}> {self.props.title} ({frames.length}) </a> &nbsp;
+              <a title={this.props.category} onClick={self.showContent} onContextMenu={self.showContextMenu}> {self.props.title} ({frames.length}) </a> &nbsp;
               <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Edit page" onClick={self.editPage}>
                 <i className="fa fa-pencil-square-o"></i>
+              </a>&nbsp;
+              <a data-toggle="modal" data-target={sel2} data-keyboard="true" title="Add new page">
+                <i className="fa fa-newspaper-o" data-aria-hidden="true"></i>
               </a>
             </strong>
           </div>
@@ -28,8 +33,15 @@ var Page = React.createClass({
         </div>
         <div className="clearfix"></div>
         <PageForm onPageSubmit={self.props.page_set.handlePageSubmit} heading="Edit page" page={self.props} />
+        <PageMenu page={self.props} />
       </div>
     );
+  },
+  componentDidMount: function() {
+    console.log('componentDidMount');
+    // document.addEventListener( "contextmenu", function(e) {
+
+    // });
   },
   expandTree: function(event) {
     $('#page_' + this.props.id + ' .page-subpages').toggle();
@@ -39,6 +51,15 @@ var Page = React.createClass({
   showContent: function(event) {
     $('#content').append($('#page_' + this.props.id + ' .page-frames').html());
     return;
+  },
+
+  showContextMenu: function(e) {
+    var self = this;
+    var sel = '#page_' + self.props.id;
+    e.preventDefault();
+    self.state.menu.coords = {x: e.clientX, y: e.clientY};
+    console.log('state', self.state);
+    $(sel + ' nav.context-menu').toggle();
   },
 
   editPage: function(event) {
@@ -103,15 +124,8 @@ var PagesSet = React.createClass({
   render: function() {
     // here we set 'page_set' property to have ability to access own methods from child objects (Page)
     var self = this;
-    var sel = '#book_' + this.props.book.props.id;
-    var sel1 = sel + ' .pages-set > .modal';
     return (
       <div className="pages-set">
-        <div>
-          <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Add new page">
-              <i className="fa fa-newspaper-o" data-aria-hidden="true"></i>&nbsp;New page
-          </a>
-        </div>
         <PageForm onPageSubmit={this.handlePageSubmit} />
         <PagesList data={this.state.data} book={this.props.book} page_set={this} />
       </div>
@@ -126,12 +140,39 @@ var PagesList = React.createClass({
     var pages = this.props.data.map(function(page, index) {
       return (
         <Page date={page.updated_at} category={page.category} id={page.id}
-              title={page.title} page_set={self.props.page_set} key={index}
+              title={page.title} page_set={self.props.page_set} key={index}  book={self.props.book}
               tags={page.tags} parent_id={page.parent_id} parent_page={self.props.parent_page}>
         </Page>
       );
     });
     return (<div className="pages-list">{pages} </div>);
+  }
+});
+
+var PageMenu = React.createClass({
+  render: function() {
+    var self = this;
+    return (
+      <nav className="context-menu">
+        <ul className="context-menu__items">
+          <li className="context-menu__item">
+            <a className="context-menu__link" data-action="New">
+              <i className="fa fa-edit"></i> New Page
+            </a>
+          </li>
+          <li className="context-menu__item">
+            <a className="context-menu__link" data-action="Edit">
+              <i className="fa fa-edit"></i> Edit Page
+            </a>
+          </li>
+          <li className="context-menu__item">
+            <a className="context-menu__link" data-action="Delete">
+              <i className="fa fa-times"></i> Delete Page
+            </a>
+          </li>
+        </ul>
+      </nav>
+    );
   }
 });
 

@@ -74,3 +74,16 @@
 
 #navigation {width: 20%;}
 #content {width: 80%;}
+
+.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  background: white;
+  color: white;
+  padding: 10px 20px;
+  opacity: 0.9;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
