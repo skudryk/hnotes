@@ -16,7 +16,7 @@ var Book = React.createClass({
           </strong> &nbsp;
           <a data-toggle="modal" data-target={sel1} data-keyboard="true"
              title="Edit book" onClick={self.editBook}>
-                <icon className="icon-edit"></icon>
+                <i className="fa fa-pencil-square-o"></i>
           </a>
         </div>
         <div className="book-pages">

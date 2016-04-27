@@ -16,7 +16,7 @@ var Page = React.createClass({
               <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
               <a title={this.props.category} onClick={self.showContent}> {self.props.title} ({frames.length}) </a> &nbsp;
               <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Edit page" onClick={self.editPage}>
-                <icon className="icon-edit"></icon>
+                <i className="fa fa-pencil-square-o"></i>
               </a>
             </strong>
           </div>
@@ -101,17 +101,19 @@ var PagesSet = React.createClass({
     return;
   },
   render: function() {
-    // here we set 'parent' property to have ability to access own methods from child objects (Page)
-    // 
+    // here we set 'page_set' property to have ability to access own methods from child objects (Page)
     var self = this;
+    var sel = '#book_' + this.props.book.props.id;
+    var sel1 = sel + ' .pages-set > .modal';
     return (
       <div className="pages-set">
-        <PagesList data={this.state.data} book={this.props.book} page_set={this} />
-        <hr />
-        <div className="p20"><a onClick={this.showPageForm} >New page</a></div>
-        <div className="new-page">
-          <PageForm onPageSubmit={this.handlePageSubmit} />
+        <div>
+          <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Add new page">
+              <i className="fa fa-newspaper-o" data-aria-hidden="true"></i>&nbsp;New page
+          </a>
         </div>
+        <PageForm onPageSubmit={this.handlePageSubmit} />
+        <PagesList data={this.state.data} book={this.props.book} page_set={this} />
       </div>
     );
   }
