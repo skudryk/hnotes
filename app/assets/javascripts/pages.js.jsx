@@ -11,18 +11,13 @@ var Page = React.createClass({
     var sel1 = '#' + sel + ' > .modal';
     var book_sel = '#book_' + this.props.book.props.id;
     var sel2 = book_sel + ' .pages-set > .modal';
+    self.state.dialogs = {edit: sel1, create: sel2};
     return (
       <div className="page-container" id={sel}>
           <div className="page-heading">
             <strong className="page-title">
               <a className="page-collapse" onClick={self.expandTree}>{self.state.indicator}</a>&nbsp;
               <a title={this.props.category} onClick={self.showContent} onContextMenu={self.showContextMenu}> {self.props.title} ({frames.length}) </a> &nbsp;
-              <a data-toggle="modal" data-target={sel1} data-keyboard="true" title="Edit page" onClick={self.editPage}>
-                <i className="fa fa-pencil-square-o"></i>
-              </a>&nbsp;
-              <a data-toggle="modal" data-target={sel2} data-keyboard="true" title="Add new page">
-                <i className="fa fa-newspaper-o" data-aria-hidden="true"></i>
-              </a>
             </strong>
           </div>
           <div className="page-subpages">
@@ -33,10 +28,12 @@ var Page = React.createClass({
         </div>
         <div className="clearfix"></div>
         <PageForm onPageSubmit={self.props.page_set.handlePageSubmit} heading="Edit page" page={self.props} />
-        <PageMenu page={self.props} />
+        <PageMenu page={self} />
       </div>
     );
   },
+
+
   componentDidMount: function() {
     console.log('componentDidMount');
     // document.addEventListener( "contextmenu", function(e) {
@@ -69,7 +66,12 @@ var Page = React.createClass({
       modal.focus();
     });
     return;
+  },
+
+  deletePage: function(e) {
+    return;
   }
+
 });
 
 var PagesSet = React.createClass({
@@ -150,28 +152,35 @@ var PagesList = React.createClass({
 });
 
 var PageMenu = React.createClass({
+  closeContextMenu: function(ev) {
+    console.log('onMouseOut');
+    var event = ev || window.event;
+    $(event.target).hide();
+  },
   render: function() {
     var self = this;
     return (
-      <nav className="context-menu">
+      <div onClick={self.closeContextmenu}>
+      <nav className="context-menu" >
         <ul className="context-menu__items">
           <li className="context-menu__item">
-            <a className="context-menu__link" data-action="New">
-              <i className="fa fa-edit"></i> New Page
+            <a data-toggle="modal" data-target={self.props.page.state.dialogs.create} data-keyboard="true">
+                <i className="fa fa-newspaper-o" data-aria-hidden="true"></i> New Page
             </a>
           </li>
           <li className="context-menu__item">
-            <a className="context-menu__link" data-action="Edit">
-              <i className="fa fa-edit"></i> Edit Page
-            </a>
+              <a data-toggle="modal" data-target={self.props.page.state.dialogs.edit} data-keyboard="true" onClick={self.props.page.editPage}>
+                <i className="fa fa-edit"></i> Edit Page
+              </a>
           </li>
           <li className="context-menu__item">
-            <a className="context-menu__link" data-action="Delete">
+            <a className="context-menu__link">
               <i className="fa fa-times"></i> Delete Page
             </a>
           </li>
         </ul>
       </nav>
+      </div>
     );
   }
 });

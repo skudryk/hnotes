@@ -95,10 +95,14 @@ var BooksBox = React.createClass({
     $('.new-book').toggle();
     return;
   },
+  hideContextMenu: function(e) {
+    $('.context-menu').hide();
+    return true;
+  },
   render: function() {
     // here we set parent property to have ability to access own methods from child objects
     return (
-      <div className="books-box">
+      <div className="books-box" onClick={this.hideContextMenu}>
         <h2>Books</h2>
         <BookList data={this.state.data} parent={this} />
         <hr />
